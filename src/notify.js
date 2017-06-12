@@ -6,6 +6,9 @@ export default {
     let Constr = Vue.extend(VueNotify)
     let Notify = new Constr()
 
+    // Apply configuration
+    Notify.options = Object.assign(Notify.options, options)
+
     // Mount it
     let vm = Notify.$mount()
 
