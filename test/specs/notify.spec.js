@@ -1,4 +1,4 @@
-import Notify from '../../src/notify.vue'
+import Notify from 'src/Notify.vue'
 import {expect} from 'chai'
 
 describe('notify.vue', function () {

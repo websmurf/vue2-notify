@@ -1,4 +1,4 @@
-import VueNotify from './notify.vue'
+import VueNotify from './Notify.vue'
 
 export default {
   install (Vue, options = {}) {
