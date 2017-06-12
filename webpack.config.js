@@ -1,6 +1,7 @@
 var path = require('path')
 var entry = process.env.NODE_ENV === 'production' ? './build/prod.js' : './build/dev.js'
 var webpack = require('webpack')
+var projectRoot = path.resolve(__dirname, './')
 
 module.exports = {
   entry: entry,
@@ -11,6 +12,15 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        include: projectRoot,
+        options: {
+          formatter: require('eslint-friendly-formatter')
+        }
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
