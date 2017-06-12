@@ -1,5 +1,5 @@
 <template>
-  <div class="notify">
+  <div class="notify" :class="'notify-' + options.position">
     <transition-group name="notify" tag="div" @enter="slideDown" @leave="slideUp">
       <div v-for="(item, key) in items" :key="key" class="notify-item">
         <div :class="itemClass(item.type)"><span :class="itemIcon(item.type)"></span> {{ item.text }}</div>
@@ -7,11 +7,17 @@
     </transition-group>
   </div>
 </template>
-<style lang="sass">
-  .notify
+<style lang="sass" scoped>
+  .notify-top-full
     position: fixed
     top: 5px
     left: 15px
+    right: 15px
+
+  .notify-top-left
+    position: fixed
+    top: 5px
+    width: 300px
     right: 15px
 </style>
 <script>
@@ -21,25 +27,30 @@
   export default {
     data () {
       return {
+        types: {
+          info: { itemClass: 'alert-info', iconClass: 'fa fa-lg fa-info-circle' },
+          error: { itemClass: 'alert-danger', iconClass: 'fa fa-lg fa-exclamation-triangle' },
+          warning: { itemClass: 'alert-warning', iconClass: 'fa fa-lg fa-exclamation-circle' },
+          success: { itemClass: 'alert-success', iconClass: 'fa fa-lg fa-check-circle' }
+        },
         options: {
           itemClass: 'alert col-12',
           duration: 500,
           visibility: 2000,
-          types: {
-            info: { itemClass: 'alert-info', iconClass: 'fa fa-info-circle' },
-            error: { itemClass: 'alert-danger', iconClass: 'fa fa-exclamation-circle' },
-            success: { itemClass: 'alert-success', iconClass: 'fa fa-info-circle' }
-          }
+          position: 'top-left'
         },
         items: {}
       }
     },
     methods: {
       itemClass (type) {
-        return [this.options.itemClass, this.options.types[type].itemClass]
+        return [this.options.itemClass, this.types[type].itemClass]
       },
       itemIcon (type) {
-        return this.options.types[type].iconClass
+        return this.types[type].iconClass
+      },
+      setTypes (types) {
+        this.types = types
       },
       addItem (type, msg) {
         // generate unique index
