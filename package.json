@@ -1,7 +1,7 @@
 {
   "name": "vue2-notify",
   "description": "Simple notify component for VueJS 2",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Adam van Dongen <adam@bandhosting.nl>",
   "private": false,
   "scripts": {
