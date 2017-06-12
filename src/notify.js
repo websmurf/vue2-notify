@@ -1,10 +1,10 @@
 'use strict'
-import VeuNotify from './notify.vue'
+import VueNotify from './notify.vue'
 
 export default {
   install (Vue, options = {}) {
     // Create component instance
-    let Constr = Vue.extend(VeuNotify)
+    let Constr = Vue.extend(VueNotify)
     let Notify = new Constr()
 
     // Mount it

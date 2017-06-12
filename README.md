@@ -4,7 +4,9 @@ A simple bootstrap styled Vue component for notifications. Compatible with Vue 2
 
 ## Install
 
-`$ npm install vue2-notify --save`
+```
+$ npm install vue2-notify --save
+```
 
 Then in your main.js:
 
@@ -19,11 +21,15 @@ Vue.use(Notify)
 
 Inside your component:
 
-`this.$notify('A message that should be displayed', 'type')`
+```
+this.$notify('A message that should be displayed', 'type')
+```
 
 or
 
-`Vue.$notify('A message that should be displayed', 'type')`
+```
+Vue.$notify('A message that should be displayed', 'type')
+```
 
 
 Type should be one of the types defined in the configuration of the component.

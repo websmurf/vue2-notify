@@ -1,8 +1,9 @@
 var path = require('path')
+var entry = process.env.NODE_ENV === 'production' ? './build/prod.js' : './build/dev.js'
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './build/dev.js',
+  entry: entry,
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -54,6 +55,9 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
+  module.exports.output.library = 'vue2-notify'
+  module.exports.output.libraryTarget = 'commonjs2'
+
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
