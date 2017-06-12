@@ -4,6 +4,7 @@
   "version": "1.0.1",
   "author": "Adam van Dongen <adam@bandhosting.nl>",
   "private": false,
+  "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
@@ -15,6 +16,14 @@
   "bugs": {
     "url": "https://github.com/websmurf/vue2-notify/issues"
   },
+  "homepage": "https://github.com/websmurf/vue2-notify",
+  "keywords": [
+    "vue",
+    "vuejs",
+    "vue-component",
+    "notify",
+    "toastr"
+  ],
   "dependencies": {
     "velocity-animate": "^1.5.0"
   },
