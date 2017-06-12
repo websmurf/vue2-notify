@@ -5,6 +5,15 @@
   "author": "Adam van Dongen <adam@bandhosting.nl>",
   "private": false,
   "license": "MIT",
+  "homepage": "https://github.com/websmurf/vue2-notify",
+  "keywords": [
+    "vue",
+    "vuejs",
+    "vue-component",
+    "notify",
+    "toastr"
+  ],
+  "main": "dist/build.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
@@ -16,16 +25,8 @@
   "bugs": {
     "url": "https://github.com/websmurf/vue2-notify/issues"
   },
-  "homepage": "https://github.com/websmurf/vue2-notify",
-  "keywords": [
-    "vue",
-    "vuejs",
-    "vue-component",
-    "notify",
-    "toastr"
-  ],
   "dependencies": {
-    "velocity-animate": "^1.5.0"
+    "babel-runtime": "^6.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
@@ -37,6 +38,7 @@
     "file-loader": "^0.9.0",
     "node-sass": "^4.5.0",
     "sass-loader": "^5.0.1",
+    "velocity-animate": "^1.5.0",
     "vue": "^2.0.0",
     "vue-loader": "^12.1.0",
     "vue-template-compiler": "^2.3.3",

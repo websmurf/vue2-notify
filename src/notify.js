@@ -1,4 +1,3 @@
-'use strict'
 import VueNotify from './notify.vue'
 
 export default {
