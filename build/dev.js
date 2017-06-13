@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Notify from '../src/notify'
+import Notify from '../src/install'
 
 // Use Notify
 Vue.use(Notify)

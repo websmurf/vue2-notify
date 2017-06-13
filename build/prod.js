@@ -1,1 +1,1 @@
-module.exports = require('../src/notify.js')
+module.exports = require('../src/install.js')
