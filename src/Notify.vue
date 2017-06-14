@@ -13,6 +13,7 @@
     top: 5px
     left: 15px
     right: 15px
+    z-index: 9999
 
   .notify-top-left
     position: fixed
