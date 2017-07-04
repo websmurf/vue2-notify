@@ -43,6 +43,12 @@ Type should be one of the types defined in the configuration of the component.
 | visibility        | Integer       | 2000              | The amount of milliseconds that the notification should be visible
 | position          | String        | 'top-left'        | The location of the notification, currently possible: `top-left` or `top-full`
 
+Configuration options can be provided as options in the Vue.use statement:
+
+```
+// Use Notify
+Vue.use(Notify, {visibility: 5000})
+```
 
 ## Types
 
