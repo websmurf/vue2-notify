@@ -1,7 +1,7 @@
 {
   "name": "vue2-notify",
   "description": "Simple notify component for VueJS 2",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Adam van Dongen <adam@bandhosting.nl>",
   "private": false,
   "license": "MIT",
@@ -74,9 +74,9 @@
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5"
   },
-   "peerDependencies": {
+  "peerDependencies": {
     "vue": "^2.2.0",
     "bootstrap": "^3.3.7",
-    "velocity-animate": "^1.5.0" 
+    "velocity-animate": "^1.5.0"
   }
 }
