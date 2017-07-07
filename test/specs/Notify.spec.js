@@ -24,32 +24,6 @@ describe('notify.vue', function () {
     expect(defaultData.items).to.be.a('object')
   })
 
-  it('should have an itemClass method that returns the class that should be applied to the item based on the provided type', function () {
-    // Extract default data
-    const defaultData = Notify.data()
-
-    // Create local mapping
-    Notify.types = defaultData.types
-    Notify.options = defaultData.options
-
-    // Validation
-    expect(Notify.methods.itemClass.call(Notify, 'info')).to.deep.equal(['alert col-12', 'alert-info'])
-    expect(Notify.methods.itemClass.call(Notify, 'error')).to.deep.equal(['alert col-12', 'alert-danger'])
-  })
-
-  it('should have an itemIcon method that returns the class that should be applied to the item icon based on the provided type', function () {
-    // Extract default data
-    const defaultData = Notify.data()
-
-    // Create local mapping
-    Notify.types = defaultData.types
-    Notify.options = defaultData.options
-
-    // Validation
-    expect(Notify.methods.itemIcon.call(Notify, 'info')).to.equal('fa fa-lg fa-info-circle')
-    expect(Notify.methods.itemIcon.call(Notify, 'error')).to.equal('fa fa-lg fa-exclamation-triangle')
-  })
-
   it('should have a setTypes method that overrides the existing type mapping', function () {
     // Create mock list
     Notify.types = {}
@@ -67,27 +41,69 @@ describe('notify.vue', function () {
     expect(Notify.types).to.deep.equal(types)
   })
 
-  it('should have an addItem method that adds an item to the items list', function () {
+  it('should have an addItem method that adds an item with default settings to the items list', function () {
     // Use fake timers
     let clock = sinon.useFakeTimers()
 
     // Create mock list
     Notify.items = {}
-    Notify.options = {visibility: 500}
+    Notify.types = Notify.data().types
+    Notify.options = Notify.data().options
     Notify.removeItem = sinon.stub()
 
     // Call method logic
     Notify.methods.addItem.call(Notify, 'error', 'This is an error message')
 
     // Items should be set at this point, keyed by the timestamp (zero at this point)
-    expect(Notify.items).to.deep.equal({0: {type: 'error', text: 'This is an error message'}})
+    expect(Notify.items).to.deep.equal({0: {
+      type: 'error',
+      text: 'This is an error message',
+      options: {iconClass: 'fa fa-lg fa-exclamation-triangle', itemClass: ['alert col-12', 'alert-danger'], visibility: 2000}
+    }})
 
-    // Move clock forward 499 seconds
+    // At this point removeItem should not be called
     expect(Notify.removeItem.called).to.equal(false)
 
+    // Move clock forward visibility + duration milliseconds
+    clock.tick(5000)
+
+    // Validation
+    expect(Notify.removeItem.calledOnce).to.equal(true)
+    expect(Notify.removeItem.calledWith(0)).to.equal(true)
+
+    // Restore logic
+    clock.restore()
+  })
+
+  it('should have an addItem method that adds an item with custom settings to the items list', function () {
+    // Use fake timers
+    let clock = sinon.useFakeTimers()
+
+    // Create mock list
+    Notify.items = {}
+    Notify.types = Notify.data().types
+    Notify.options = Notify.data().options
+    Notify.removeItem = sinon.stub()
+
+    // Call method logic
+    Notify.methods.addItem.call(Notify, 'error', 'This is an error message', { iconClass: 'icon', itemClass: 'item', visibility: 10000 })
+
+    // Items should be set at this point, keyed by the timestamp (zero at this point)
+    expect(Notify.items).to.deep.equal({0: {
+      type: 'error',
+      text: 'This is an error message',
+      options: {iconClass: 'icon', itemClass: 'item', visibility: 10000}
+    }})
+
+    // At this point removeItem should not be called
+    expect(Notify.removeItem.called).to.equal(false)
+
+    // Move clock forward visibility + duration milliseconds
+    clock.tick(10501)
+
     // Move clock another second forward
-    expect(Notify.removeItem.calledOnce)
-    expect(Notify.removeItem.calledWith('0'))
+    expect(Notify.removeItem.calledOnce).to.equal(true)
+    expect(Notify.removeItem.calledWith(0)).to.equal(true)
 
     // Restore logic
     clock.restore()

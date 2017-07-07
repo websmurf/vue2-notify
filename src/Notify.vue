@@ -2,7 +2,7 @@
   <div class="notify" :class="'notify-' + options.position">
     <transition-group name="notify" tag="div" @enter="slideDown" @leave="slideUp">
       <div v-for="(item, key) in items" :key="key" class="notify-item">
-        <div :class="itemClass(item.type)"><span :class="itemIcon(item.type)"></span> {{ item.text }}</div>
+        <div :class="item.options.itemClass"><span :class="item.options.iconClass"></span> {{ item.text }}</div>
       </div>
     </transition-group>
   </div>
@@ -44,24 +44,20 @@
       }
     },
     methods: {
-      itemClass (type) {
-        return [this.options.itemClass, this.types[type].itemClass]
-      },
-      itemIcon (type) {
-        return this.types[type].iconClass
-      },
       setTypes (types) {
         this.types = types
       },
-      addItem (type, msg) {
+      addItem (type, msg, options) {
+        let itemOptions = Object.assign({}, { iconClass: this.types[type].iconClass, itemClass: [this.options.itemClass, this.types[type].itemClass], visibility: this.options.visibility }, options)
+
         // generate unique index
         let idx = new Date().getTime()
 
         // add it to the queue
-        Vue.set(this.items, idx, { type: type, text: msg })
+        Vue.set(this.items, idx, { type: type, text: msg, options: itemOptions })
 
         // remove item from array
-        setTimeout(() => { this.removeItem(idx) }, this.options.visibility)
+        setTimeout(() => { this.removeItem(idx) }, this.duration + itemOptions.visibility)
       },
       slideDown (el) {
         Velocity(el, 'slideDown', {duration: this.options.duration})

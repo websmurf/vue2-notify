@@ -31,6 +31,11 @@ or
 Vue.$notify('A message that should be displayed', 'type')
 ```
 
+You can override the itemClass, iconClass or visibility on a per usage basis: 
+
+```
+this.$notify('A message that should be displayed', 'type', { itemClass: 'alert col-6 alert-info', iconClass: 'fa fa-lg fa-handshake-o', visibility: 10000 })
+```
 
 Type should be one of the types defined in the configuration of the component.
 

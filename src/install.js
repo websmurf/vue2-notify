@@ -16,8 +16,8 @@ export default {
     document.querySelector('body').appendChild(vm.$el)
 
     // Create generic method
-    Vue.$notify = Vue.prototype.$notify = (msg, type = 'info') => {
-      Notify.addItem(type, msg)
+    Vue.$notify = Vue.prototype.$notify = (msg, type = 'info', options = {}) => {
+      Notify.addItem(type, msg, options)
     }
   }
 }
