@@ -10,7 +10,7 @@ $ npm install vue2-notify --save
 
 Then in your main.js:
 
-```
+```js
 import Notify from '../src/notify'
 
 // Use Notify
@@ -21,19 +21,19 @@ Vue.use(Notify)
 
 Inside your component:
 
-```
+```js
 this.$notify('A message that should be displayed', 'type')
 ```
 
 or
 
-```
+```js
 Vue.$notify('A message that should be displayed', 'type')
 ```
 
 You can override the itemClass, iconClass or visibility on a per usage basis: 
 
-```
+```js
 this.$notify('A message that should be displayed', 'type', { itemClass: 'alert col-6 alert-info', iconClass: 'fa fa-lg fa-handshake-o', visibility: 10000 })
 ```
 
@@ -50,7 +50,7 @@ Type should be one of the types defined in the configuration of the component.
 
 Configuration options can be provided as options in the Vue.use statement:
 
-```
+```js
 // Use Notify
 Vue.use(Notify, {visibility: 5000})
 ```
@@ -69,7 +69,7 @@ Defines the type of notifications that can be triggered
 You can override the default list of types in the following way, for example to use
 glyphicons instead of font awesome icons:
 
-```
+```js
 const types = {
   info: { itemClass: 'alert-info', iconClass: 'glyphicons glyphicons-info-sign'},
   ..
