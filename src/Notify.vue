@@ -57,7 +57,7 @@
         Vue.set(this.items, idx, { type: type, text: msg, options: itemOptions })
 
         // remove item from array
-        setTimeout(() => { this.removeItem(idx) }, this.duration + itemOptions.visibility)
+        setTimeout(() => { this.removeItem(idx) }, this.options.duration + itemOptions.visibility)
       },
       slideDown (el) {
         Velocity(el, 'slideDown', {duration: this.options.duration})
