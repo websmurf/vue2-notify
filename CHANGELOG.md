@@ -1,5 +1,16 @@
 # Changelog
 
+### 1.1.4
+
+Changed
+* Automatic build generation when executing npm version
+
+### 1.1.3
+
+Changed
+
+* Fixed issue with visibility duration
+
 ### 1.1.1
 
 Changed
