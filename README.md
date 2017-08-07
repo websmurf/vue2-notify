@@ -2,6 +2,15 @@
 
 A simple bootstrap styled Vue component for notifications. Compatible with Vue 2.x
 
+## Requirements
+
+Required packages:
+- vue 2+
+- velocity-animate 1.5+
+
+Optional packages:
+- bootstrap (only used for styling)
+
 ## Install
 
 ```
