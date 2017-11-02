@@ -19,5 +19,9 @@ export default {
     Vue.$notify = Vue.prototype.$notify = (msg, type = 'info', options = {}) => {
       Notify.addItem(type, msg, options)
     }
+    // Create setTypes method
+    Vue.$notify.setTypes = Vue.prototype.$notify.setTypes = (types) => {
+      Notify.setTypes(types)
+    }
   }
 }

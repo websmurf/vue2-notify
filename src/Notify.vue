@@ -2,7 +2,8 @@
   <div class="notify" :class="'notify-' + options.position">
     <transition-group name="notify" tag="div" @enter="slideDown" @leave="slideUp">
       <div v-for="(item, key) in items" :key="key" class="notify-item">
-        <div :class="item.options.itemClass"><span :class="item.options.iconClass"></span> {{ item.text }}</div>
+        <div :class="item.options.itemClass">
+          <span :class="item.options.iconClass" v-if="item.options.iconClass"></span> {{ item.text }}</div>
       </div>
     </transition-group>
   </div>
@@ -14,10 +15,30 @@
     left: 15px
     right: 15px
     z-index: 9999
-
+  .notify-bottom-full
+    position: fixed
+    bottom: 5px
+    left: 15px
+    right: 15px
+    z-index: 9999
+  .notify-top-right
+    position: fixed
+    top: 5px
+    width: 300px
+    right: 15px
   .notify-top-left
     position: fixed
     top: 5px
+    width: 300px
+    left: 15px
+  .notify-bottom-left
+    position: fixed
+    bottom: 5px
+    width: 300px
+    left: 15px
+  .notify-bottom-right
+    position: fixed
+    bottom: 5px
     width: 300px
     right: 15px
 </style>
