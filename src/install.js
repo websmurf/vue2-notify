@@ -23,5 +23,8 @@ export default {
     Vue.$notify.setTypes = Vue.prototype.$notify.setTypes = (types) => {
       Notify.setTypes(types)
     }
+    Vue.$notify.removeAll = Vue.prototype.$notify.removeAll = () => {
+      Notify.removeAll()
+    }
   }
 }

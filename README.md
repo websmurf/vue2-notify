@@ -1,6 +1,6 @@
 # Notify
 
-A simple bootstrap styled Vue component for notifications. Compatible with Vue 2.x
+A simple bootstrap|bulma styled Vue component for notifications. Compatible with Vue 2.x
 
 ## Requirements
 
@@ -9,7 +9,7 @@ Required packages:
 - velocity-animate 1.5+
 
 Optional packages:
-- bootstrap (only used for styling)
+- bootstrap or bulma (only used for styling)
 
 ## Install
 
@@ -40,30 +40,33 @@ or
 Vue.$notify('A message that should be displayed', 'type')
 ```
 
-You can override the itemClass, iconClass or visibility on a per usage basis: 
+## Configuration
+
+| Option            | Type          | Default           | Description     
+|-------------------|---------------|-------------------|-----------------------------------------------------------------------------------------
+| itemClass         | String        | 'alert col-12'    | The class that the notification is wrapped in, defaults to the default bootstrap style
+| duration          | Integer       | 500               | The amount of milliseconds that the animation should take (slideDown/slideUp, fadeIn/fadeOut) 
+| visibility        | Integer       | 2000              | The amount of milliseconds that the notification should be visible (if notification __is not permanent__)
+| position          | String        | 'top-left'        | The location of the notification, currently possible: `top-left`, `top-right`, `top-full`, `bottom-left`, `bottom-right` and `bottom-full`
+| enter             | String        | 'slideDown'       | Entry animation type, currently possible: `slideDown`, `fadeIn`
+| leave             | String        | 'slideUp'         | Exit animation type, currently possible: `slideUp`, `fadeOut`
+| permanent         | Boolean       | false             | Disable notification auto close
+| mode              | String        | 'text'            | Set `'html'` to output real html. Only use HTML interpolation on trusted content and never on user-provided content.
+Configuration options can be provided as options in the Vue.use statement:
+
+```js
+// Use Notify
+Vue.use(Notify, {visibility: 5000, permanent: true})
+```
+
+### Overriding configuration
+You can override the ___itemClass___, ___iconClass___, ___visibility___, ___mode___ or ___closeButton___ options on a per usage basis:
 
 ```js
 this.$notify('A message that should be displayed', 'type', { itemClass: 'alert col-6 alert-info', iconClass: 'fa fa-lg fa-handshake-o', visibility: 10000 })
 ```
 
 Type should be one of the types defined in the configuration of the component.
-
-## Configuration
-
-| Option            | Type          | Default           | Description     
-|-------------------|---------------|-------------------|-----------------------------------------------------------------------------------------
-| itemClass         | String        | 'alert col-12'    | The class that the notification is wrapped in, defaults to the default bootstrap style
-| duration          | Integer       | 500               | The amount of milliseconds that the animation should take (slideDown, slideUp) 
-| visibility        | Integer       | 2000              | The amount of milliseconds that the notification should be visible
-| position          | String        | 'top-left'        | The location of the notification, currently possible: `top-left`, `top-right`, `top-full`, `bottom-left`, `bottom-right` and `bottom-full`
-| enter             | String        | 'slideDown'       | Entry animation type, currently possible: `slideDown`, `fadeIn`
-| leave             | String        | 'slideUp'         | Exit animation type, currently possible: `slideUp`, `fadeOut`
-Configuration options can be provided as options in the Vue.use statement:
-
-```js
-// Use Notify
-Vue.use(Notify, {visibility: 5000})
-```
 
 ## Types
 
@@ -90,7 +93,9 @@ Vue.$notify.setTypes(types)
 
 ```
 
-### Use vue2-notify with Bulma
+## Examples
+
+### Using vue2-notify with Bulma
 
 In app.js:
 ```js
@@ -111,4 +116,14 @@ Vue.$notify.setTypes(types);
 And call `this.$notify` method as usual:
 ```js
 this.$notify('A message that should be displayed', 'info')
+```
+
+### HTML in notification
+```js
+this.$notify('<p>My HTML <br/>message</p>', 'info', {mode: 'html'})
+```
+
+### Permanent notification
+```js
+this.$notify('Permanent message', 'info', {permanent: true})
 ```

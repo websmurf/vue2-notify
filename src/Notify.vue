@@ -1,9 +1,16 @@
 <template>
-  <div class="notify" :class="'notify-' + options.position">
+  <div class="notify" :class="'notify-' + options.position" :style="{ width: width}">
     <transition-group name="notify" tag="div" @enter="slideDown" @leave="slideUp">
       <div v-for="(item, key) in items" :key="key" class="notify-item">
         <div :class="item.options.itemClass">
-          <span :class="item.options.iconClass" v-if="item.options.iconClass"></span> {{ item.text }}</div>
+          <button v-if="item.options.closeButton === 'bulma'" class="delete" @click="removeItem(key)"></button>
+          <button v-else-if="item.options.closeButton === 'bootstrap'" type="button" class="close" aria-label="Close" @click="removeItem(key)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <span :class="item.options.iconClass" v-if="item.options.iconClass"></span>
+          <div v-if="item.options.mode === 'html'" v-html="item.text"></div>
+          <template v-else>{{ item.text }}</template>
+        </div>
       </div>
     </transition-group>
   </div>
@@ -24,12 +31,10 @@
   .notify-top-right
     position: fixed
     top: 5px
-    width: 300px
     right: 15px
   .notify-top-left
     position: fixed
     top: 5px
-    width: 300px
     left: 15px
   .notify-bottom-left
     position: fixed
@@ -39,7 +44,6 @@
   .notify-bottom-right
     position: fixed
     bottom: 5px
-    width: 300px
     right: 15px
   .notify-top-full,
   .notify-top-right,
@@ -53,6 +57,8 @@
     .notify-item
       &:not(:first-child)
         margin-top: 5px
+  .notify
+    z-index: 100
 </style>
 <script>
   import Vue from 'vue'
@@ -73,7 +79,11 @@
           visibility: 2000,
           position: 'top-left',
           enter: 'slideDown',
-          leave: 'slideUp'
+          leave: 'slideUp',
+          closeButton: false,
+          width: '300px',
+          mode: 'text',
+          permanent: false
         },
         items: {}
       }
@@ -83,16 +93,24 @@
         this.types = types
       },
       addItem (type, msg, options) {
-        let itemOptions = Object.assign({}, { iconClass: this.types[type].iconClass, itemClass: [this.options.itemClass, this.types[type].itemClass], visibility: this.options.visibility }, options)
+        let defaultOptions = {
+          iconClass: this.types[type].iconClass,
+          itemClass: [this.options.itemClass, this.types[type].itemClass],
+          visibility: this.options.visibility,
+          mode: this.options.mode,
+          closeButton: this.options.closeButton
+        }
+        let itemOptions = Object.assign({}, defaultOptions, options)
 
         // generate unique index
         let idx = new Date().getTime()
 
         // add it to the queue
         Vue.set(this.items, idx, { type: type, text: msg, options: itemOptions })
-
+        if (!options.permanent && !this.options.permanent) {
         // remove item from array
-        setTimeout(() => { this.removeItem(idx) }, this.options.duration + itemOptions.visibility)
+          setTimeout(() => { this.removeItem(idx) }, this.options.duration + itemOptions.visibility)
+        }
       },
       slideDown (el) {
         Velocity(el, this.options.enter, {duration: this.options.duration})
@@ -102,6 +120,18 @@
       },
       removeItem (index) {
         Vue.delete(this.items, index)
+      },
+      removeAll () {
+        this.items = {}
+      }
+    },
+    computed: {
+      width () {
+        if (this.options.position === 'top-full' || this.options.position === 'bottom-full') {
+          return 'auto'
+        } else {
+          return this.options.width
+        }
       }
     }
   }
