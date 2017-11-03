@@ -41,6 +41,18 @@
     bottom: 5px
     width: 300px
     right: 15px
+  .notify-top-full,
+  .notify-top-right,
+  .notify-top-left
+    .notify-item
+      &:not(:last-child)
+        margin-bottom: 5px
+  .notify-bottom-full,
+  .notify-bottom-right,
+  .notify-bottom-left
+    .notify-item
+      &:not(:first-child)
+        margin-top: 5px
 </style>
 <script>
   import Vue from 'vue'
@@ -59,7 +71,9 @@
           itemClass: 'alert col-12',
           duration: 500,
           visibility: 2000,
-          position: 'top-left'
+          position: 'top-left',
+          enter: 'slideDown',
+          leave: 'slideUp'
         },
         items: {}
       }
@@ -81,10 +95,10 @@
         setTimeout(() => { this.removeItem(idx) }, this.options.duration + itemOptions.visibility)
       },
       slideDown (el) {
-        Velocity(el, 'slideDown', {duration: this.options.duration})
+        Velocity(el, this.options.enter, {duration: this.options.duration})
       },
       slideUp (el, done) {
-        Velocity(el, 'slideUp', {duration: this.options.duration, complete: done})
+        Velocity(el, this.options.leave, {duration: this.options.duration, complete: done})
       },
       removeItem (index) {
         Vue.delete(this.items, index)

@@ -56,7 +56,8 @@ Type should be one of the types defined in the configuration of the component.
 | duration          | Integer       | 500               | The amount of milliseconds that the animation should take (slideDown, slideUp) 
 | visibility        | Integer       | 2000              | The amount of milliseconds that the notification should be visible
 | position          | String        | 'top-left'        | The location of the notification, currently possible: `top-left`, `top-right`, `top-full`, `bottom-left`, `bottom-right` and `bottom-full`
-
+| enter             | String        | 'slideDown'       | Entry animation type, currently possible: `slideDown`, `fadeIn`
+| leave             | String        | 'slideUp'         | Exit animation type, currently possible: `slideUp`, `fadeOut`
 Configuration options can be provided as options in the Vue.use statement:
 
 ```js
