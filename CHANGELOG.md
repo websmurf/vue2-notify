@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.2
+* added setTypes method (thanks @core01)
+* iconClass is optional now (thanks @core01)
+* added bottom-full, bottom-left, bottom-right, top-right positions (thanks @core01)
+
 ### 1.1.4
 
 Changed
