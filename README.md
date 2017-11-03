@@ -52,6 +52,7 @@ Vue.$notify('A message that should be displayed', 'type')
 | leave             | String        | 'slideUp'         | Exit animation type, currently possible: `slideUp`, `fadeOut`
 | permanent         | Boolean       | false             | Disable notification auto close
 | mode              | String        | 'text'            | Set `'html'` to output real html. Only use HTML interpolation on trusted content and never on user-provided content.
+
 Configuration options can be provided as options in the Vue.use statement:
 
 ```js
