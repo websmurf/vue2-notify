@@ -20,7 +20,7 @@ $ npm install vue2-notify --save
 Then in your main.js:
 
 ```js
-import Notify from '../src/notify'
+import Notify from 'vue2-notify'
 
 // Use Notify
 Vue.use(Notify)
@@ -55,7 +55,7 @@ Type should be one of the types defined in the configuration of the component.
 | itemClass         | String        | 'alert col-12'    | The class that the notification is wrapped in, defaults to the default bootstrap style
 | duration          | Integer       | 500               | The amount of milliseconds that the animation should take (slideDown, slideUp) 
 | visibility        | Integer       | 2000              | The amount of milliseconds that the notification should be visible
-| position          | String        | 'top-left'        | The location of the notification, currently possible: `top-left` or `top-full`
+| position          | String        | 'top-left'        | The location of the notification, currently possible: `top-left`, `top-right`, `top-full`, `bottom-left`, `bottom-right` and `bottom-full`
 
 Configuration options can be provided as options in the Vue.use statement:
 
@@ -87,4 +87,27 @@ const types = {
 
 Vue.$notify.setTypes(types)
 
+```
+
+### Use vue2-notify with Bulma
+
+In app.js:
+```js
+import Notify from 'vue2-notify'
+Vue.use(Notify, {
+  itemClass: 'notification'
+})
+const types = {
+  info: { itemClass: 'is-info', },
+  error: { itemClass: 'is-danger' },
+  warning: { itemClass: 'is-warning' },
+  success: { itemClass: 'is-success', iconClass: 'fa fa-lg fa-check-circle' }
+
+}
+
+Vue.$notify.setTypes(types);
+```
+And call `this.$notify` method as usual:
+```js
+this.$notify('A message that should be displayed', 'info')
 ```
