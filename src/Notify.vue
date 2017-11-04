@@ -98,7 +98,8 @@
           itemClass: [this.options.itemClass, this.types[type].itemClass],
           visibility: this.options.visibility,
           mode: this.options.mode,
-          closeButton: this.options.closeButton
+          closeButton: this.options.closeButton,
+          permanent: this.options.permanent
         }
         let itemOptions = Object.assign({}, defaultOptions, options)
 
@@ -107,7 +108,7 @@
 
         // add it to the queue
         Vue.set(this.items, idx, { type: type, text: msg, options: itemOptions })
-        if (!options.permanent && !this.options.permanent) {
+        if (itemOptions.permanent === false) {
         // remove item from array
           setTimeout(() => { this.removeItem(idx) }, this.options.duration + itemOptions.visibility)
         }

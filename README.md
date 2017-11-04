@@ -40,6 +40,19 @@ or
 Vue.$notify('A message that should be displayed', 'type')
 ```
 
+You may use short type call:
+
+```js
+this.$notify.success('This is success message');
+```
+
+or
+
+```js
+Vue.$notify('This is success message');
+```
+
+**Bulma users** can call `this.$notify.danger('Error message');`, `this.$notify.danger()` is link to `this.$notify.error()`
 ## Configuration
 
 | Option            | Type          | Default           | Description     
@@ -118,12 +131,18 @@ And call `this.$notify` method as usual:
 ```js
 this.$notify('A message that should be displayed', 'info')
 ```
-
+or
+```js
+this.$notify.info('A message that should be displayed')
+```
 ### HTML in notification
 ```js
 this.$notify('<p>My HTML <br/>message</p>', 'info', {mode: 'html'})
 ```
-
+or
+```js
+this.$notify.error('<p>My HTML <br/>message</p>', {mode: 'html'})
+```
 ### Permanent notification
 ```js
 this.$notify('Permanent message', 'info', {permanent: true})

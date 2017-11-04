@@ -19,6 +19,21 @@ export default {
     Vue.$notify = Vue.prototype.$notify = (msg, type = 'info', options = {}) => {
       Notify.addItem(type, msg, options)
     }
+    Vue.$notify.info = Vue.prototype.$notify.info = (msg, options = {}) => {
+      Notify.addItem('info', msg, options)
+    }
+    Vue.$notify.success = Vue.prototype.$notify.success = (msg, options = {}) => {
+      Notify.addItem('success', msg, options)
+    }
+    Vue.$notify.error =
+      Vue.prototype.$notify.error =
+        Vue.$notify.danger =
+          Vue.prototype.$notify.danger = (msg, options = {}) => {
+            Notify.addItem('error', msg, options)
+          }
+    Vue.$notify.warning = Vue.prototype.$notify.warning = (msg, options = {}) => {
+      Notify.addItem('warning', msg, options)
+    }
     // Create setTypes method
     Vue.$notify.setTypes = Vue.prototype.$notify.setTypes = (types) => {
       Notify.setTypes(types)
