@@ -55,16 +55,17 @@ Vue.$notify('This is success message');
 **Bulma users** can call `this.$notify.danger('Error message');`, `this.$notify.danger()` is link to `this.$notify.error()`
 ## Configuration
 
-| Option            | Type          | Default           | Description     
-|-------------------|---------------|-------------------|-----------------------------------------------------------------------------------------
-| itemClass         | String        | 'alert col-12'    | The class that the notification is wrapped in, defaults to the default bootstrap style
-| duration          | Integer       | 500               | The amount of milliseconds that the animation should take (slideDown/slideUp, fadeIn/fadeOut) 
-| visibility        | Integer       | 2000              | The amount of milliseconds that the notification should be visible (if notification __is not permanent__)
-| position          | String        | 'top-left'        | The location of the notification, currently possible: `top-left`, `top-right`, `top-full`, `bottom-left`, `bottom-right` and `bottom-full`
-| enter             | String        | 'slideDown'       | Entry animation type, currently possible: `slideDown`, `fadeIn`
-| leave             | String        | 'slideUp'         | Exit animation type, currently possible: `slideUp`, `fadeOut`
-| permanent         | Boolean       | false             | Disable notification auto close
-| mode              | String        | 'text'            | Set `'html'` to output real html. Only use HTML interpolation on trusted content and never on user-provided content.
+| Option            | Type             | Default           | Description
+|-------------------|------------------|-------------------|---------------------------------------------------------------------------------------------------------------------------
+| itemClass         | String           | 'alert col-12'    | The class that the notification is wrapped in, defaults to the default bootstrap style
+| duration          | Integer          | 500               | The amount of milliseconds that the animation should take (slideDown/slideUp, fadeIn/fadeOut)
+| visibility        | Integer          | 2000              | The amount of milliseconds that the notification should be visible (if notification __is not permanent__)
+| position          | String           | 'top-left'        | The location of the notification, currently possible: `top-left`, `top-right`, `top-full`, `bottom-left`, `bottom-right` and `bottom-full`
+| enter             | String           | 'slideDown'       | Entry animation type, currently possible: `slideDown`, `fadeIn`
+| leave             | String           | 'slideUp'         | Exit animation type, currently possible: `slideUp`, `fadeOut`
+| permanent         | Boolean          | false             | Disable notification auto close
+| mode              | String           | 'text'            | Set `'html'` to output real html. Only use HTML interpolation on trusted content and never on user-provided content.
+| closeButtonClass  | Boolean / String | false             | Class name for close button. If false - close button will not be displayed. ( Example: set `'delete'` for bulma or `'close'` for bootstrap.)
 
 Configuration options can be provided as options in the Vue.use statement:
 
@@ -74,7 +75,7 @@ Vue.use(Notify, {visibility: 5000, permanent: true})
 ```
 
 ### Overriding configuration
-You can override the ___itemClass___, ___iconClass___, ___visibility___, ___mode___ or ___closeButton___ options on a per usage basis:
+You can override the ___itemClass___, ___iconClass___, ___visibility___, ___mode___ or ___closeButtonClass___ options on a per usage basis:
 
 ```js
 this.$notify('A message that should be displayed', 'type', { itemClass: 'alert col-6 alert-info', iconClass: 'fa fa-lg fa-handshake-o', visibility: 10000 })

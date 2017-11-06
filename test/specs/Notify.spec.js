@@ -64,7 +64,7 @@ describe('notify.vue', function () {
           itemClass: ['alert col-12', 'alert-danger'],
           visibility: 2000,
           mode: 'text',
-          closeButton: false,
+          closeButtonClass: false,
           permanent: false
         }
       }
@@ -95,13 +95,12 @@ describe('notify.vue', function () {
     Notify.removeItem = sinon.stub()
 
     // Call method logic
-    Notify.methods.addItem.call(Notify, 'error', 'This is an error message', { iconClass: 'icon', itemClass: 'item', visibility: 10000, mode: 'html', closeButton: 'bulma', permanent: true })
+    Notify.methods.addItem.call(Notify, 'error', 'This is an error message', { iconClass: 'icon', itemClass: 'item', visibility: 10000, mode: 'html', closeButtonClass: 'bulma', permanent: true })
     // Items should be set at this point, keyed by the timestamp (zero at this point)
-    console.log(Notify.items[0].options)
     expect(Notify.items).to.deep.equal({0: {
       type: 'error',
       text: 'This is an error message',
-      options: { iconClass: 'icon', itemClass: 'item', visibility: 10000, mode: 'html', closeButton: 'bulma', permanent: true }
+      options: { iconClass: 'icon', itemClass: 'item', visibility: 10000, mode: 'html', closeButtonClass: 'bulma', permanent: true }
     }})
 
     // At this point removeItem should not be called

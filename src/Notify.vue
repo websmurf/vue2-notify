@@ -3,8 +3,10 @@
     <transition-group name="notify" tag="div" @enter="slideDown" @leave="slideUp">
       <div v-for="(item, key) in items" :key="key" class="notify-item">
         <div :class="item.options.itemClass">
-          <button v-if="item.options.closeButton === 'bulma'" class="delete" @click="removeItem(key)"></button>
-          <button v-else-if="item.options.closeButton === 'bootstrap'" type="button" class="close" aria-label="Close" @click="removeItem(key)">
+          <button type="button" aria-label="Close"
+                  v-if="item.options.closeButtonClass"
+                  @click="removeItem(key)"
+                  :class="item.options.closeButtonClass">
             <span aria-hidden="true">&times;</span>
           </button>
           <span :class="item.options.iconClass" v-if="item.options.iconClass"></span>
@@ -80,7 +82,7 @@
           position: 'top-left',
           enter: 'slideDown',
           leave: 'slideUp',
-          closeButton: false,
+          closeButtonClass: false,
           width: '300px',
           mode: 'text',
           permanent: false
@@ -98,7 +100,7 @@
           itemClass: [this.options.itemClass, this.types[type].itemClass],
           visibility: this.options.visibility,
           mode: this.options.mode,
-          closeButton: this.options.closeButton,
+          closeButtonClass: this.options.closeButtonClass,
           permanent: this.options.permanent
         }
         let itemOptions = Object.assign({}, defaultOptions, options)
