@@ -55,11 +55,20 @@ describe('notify.vue', function () {
     Notify.methods.addItem.call(Notify, 'error', 'This is an error message')
 
     // Items should be set at this point, keyed by the timestamp (zero at this point)
-    expect(Notify.items).to.deep.equal({0: {
-      type: 'error',
-      text: 'This is an error message',
-      options: {iconClass: 'fa fa-lg fa-exclamation-triangle', itemClass: ['alert col-12', 'alert-danger'], visibility: 2000}
-    }})
+    expect(Notify.items).to.deep.equal({
+      0: {
+        type: 'error',
+        text: 'This is an error message',
+        options: {
+          iconClass: 'fa fa-lg fa-exclamation-triangle',
+          itemClass: ['alert col-12', 'alert-danger'],
+          visibility: 2000,
+          mode: 'text',
+          closeButtonClass: false,
+          permanent: false
+        }
+      }
+    })
 
     // At this point removeItem should not be called
     expect(Notify.removeItem.called).to.equal(false)
@@ -86,13 +95,12 @@ describe('notify.vue', function () {
     Notify.removeItem = sinon.stub()
 
     // Call method logic
-    Notify.methods.addItem.call(Notify, 'error', 'This is an error message', { iconClass: 'icon', itemClass: 'item', visibility: 10000 })
-
+    Notify.methods.addItem.call(Notify, 'error', 'This is an error message', { iconClass: 'icon', itemClass: 'item', visibility: 10000, mode: 'html', closeButtonClass: 'bulma', permanent: true })
     // Items should be set at this point, keyed by the timestamp (zero at this point)
     expect(Notify.items).to.deep.equal({0: {
       type: 'error',
       text: 'This is an error message',
-      options: {iconClass: 'icon', itemClass: 'item', visibility: 10000}
+      options: { iconClass: 'icon', itemClass: 'item', visibility: 10000, mode: 'html', closeButtonClass: 'bulma', permanent: true }
     }})
 
     // At this point removeItem should not be called
@@ -102,8 +110,8 @@ describe('notify.vue', function () {
     clock.tick(10501)
 
     // Move clock another second forward
-    expect(Notify.removeItem.calledOnce).to.equal(true)
-    expect(Notify.removeItem.calledWith(0)).to.equal(true)
+    expect(Notify.removeItem.calledOnce).to.equal(false)
+    expect(Notify.removeItem.calledWith(0)).to.equal(false)
 
     // Restore logic
     clock.restore()

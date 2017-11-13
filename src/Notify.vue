@@ -1,9 +1,18 @@
 <template>
-  <div class="notify" :class="'notify-' + options.position">
+  <div class="notify" :class="'notify-' + options.position" :style="{ width: width}">
     <transition-group name="notify" tag="div" @enter="slideDown" @leave="slideUp">
       <div v-for="(item, key) in items" :key="key" class="notify-item">
         <div :class="item.options.itemClass">
-          <span :class="item.options.iconClass" v-if="item.options.iconClass"></span> {{ item.text }}</div>
+          <button type="button" aria-label="Close"
+                  v-if="item.options.closeButtonClass"
+                  @click="removeItem(key)"
+                  :class="item.options.closeButtonClass">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <span :class="item.options.iconClass" v-if="item.options.iconClass"></span>
+          <div v-if="item.options.mode === 'html'" v-html="item.text"></div>
+          <template v-else>{{ item.text }}</template>
+        </div>
       </div>
     </transition-group>
   </div>
@@ -24,12 +33,10 @@
   .notify-top-right
     position: fixed
     top: 5px
-    width: 300px
     right: 15px
   .notify-top-left
     position: fixed
     top: 5px
-    width: 300px
     left: 15px
   .notify-bottom-left
     position: fixed
@@ -39,8 +46,21 @@
   .notify-bottom-right
     position: fixed
     bottom: 5px
-    width: 300px
     right: 15px
+  .notify-top-full,
+  .notify-top-right,
+  .notify-top-left
+    .notify-item
+      &:not(:last-child)
+        margin-bottom: 5px
+  .notify-bottom-full,
+  .notify-bottom-right,
+  .notify-bottom-left
+    .notify-item
+      &:not(:first-child)
+        margin-top: 5px
+  .notify
+    z-index: 100
 </style>
 <script>
   import Vue from 'vue'
@@ -59,7 +79,13 @@
           itemClass: 'alert col-12',
           duration: 500,
           visibility: 2000,
-          position: 'top-left'
+          position: 'top-left',
+          enter: 'slideDown',
+          leave: 'slideUp',
+          closeButtonClass: false,
+          width: '300px',
+          mode: 'text',
+          permanent: false
         },
         items: {}
       }
@@ -69,25 +95,46 @@
         this.types = types
       },
       addItem (type, msg, options) {
-        let itemOptions = Object.assign({}, { iconClass: this.types[type].iconClass, itemClass: [this.options.itemClass, this.types[type].itemClass], visibility: this.options.visibility }, options)
+        let defaultOptions = {
+          iconClass: this.types[type].iconClass,
+          itemClass: [this.options.itemClass, this.types[type].itemClass],
+          visibility: this.options.visibility,
+          mode: this.options.mode,
+          closeButtonClass: this.options.closeButtonClass,
+          permanent: this.options.permanent
+        }
+        let itemOptions = Object.assign({}, defaultOptions, options)
 
         // generate unique index
         let idx = new Date().getTime()
 
         // add it to the queue
         Vue.set(this.items, idx, { type: type, text: msg, options: itemOptions })
-
+        if (itemOptions.permanent === false) {
         // remove item from array
-        setTimeout(() => { this.removeItem(idx) }, this.options.duration + itemOptions.visibility)
+          setTimeout(() => { this.removeItem(idx) }, this.options.duration + itemOptions.visibility)
+        }
       },
       slideDown (el) {
-        Velocity(el, 'slideDown', {duration: this.options.duration})
+        Velocity(el, this.options.enter, {duration: this.options.duration})
       },
       slideUp (el, done) {
-        Velocity(el, 'slideUp', {duration: this.options.duration, complete: done})
+        Velocity(el, this.options.leave, {duration: this.options.duration, complete: done})
       },
       removeItem (index) {
         Vue.delete(this.items, index)
+      },
+      removeAll () {
+        this.items = {}
+      }
+    },
+    computed: {
+      width () {
+        if (this.options.position === 'top-full' || this.options.position === 'bottom-full') {
+          return 'auto'
+        } else {
+          return this.options.width
+        }
       }
     }
   }
