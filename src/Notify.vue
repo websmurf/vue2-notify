@@ -108,7 +108,16 @@
         // generate unique index
         let idx = new Date().getTime()
 
-        // add it to the queue
+        // check if this message is already shown
+        for (let key in this.items) {
+          if (this.items.hasOwnProperty(key)) {
+            if (this.items[key].text === msg) {
+              return
+            }
+          }
+        }
+
+        // add it to the queue (if it's not already there)
         Vue.set(this.items, idx, { type: type, text: msg, options: itemOptions })
         if (itemOptions.permanent === false) {
         // remove item from array
