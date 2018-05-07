@@ -247,4 +247,23 @@ describe('Notify.vue', () => {
     // Items should be empty
     expect(wrapper.vm.items).toEqual({})
   })
+
+  it('renders an empty notify element correctly', () => {
+    // Create component
+    const wrapper = mount(Notify)
+
+    // Validations
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  it('renders a notification correctly', () => {
+    // Create component
+    const wrapper = mount(Notify)
+
+    // Call method logic
+    wrapper.vm.addItem.call(Notify, 'info', 'This is an info message')
+
+    // Validations
+    expect(wrapper.html()).toMatchSnapshot()
+  })
 })
