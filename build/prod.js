@@ -1,1 +1,1 @@
-module.exports = require('../src/install.js')
+module.exports = require('../src/index.js')

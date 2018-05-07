@@ -120,7 +120,7 @@
         // add it to the queue (if it's not already there)
         Vue.set(this.items, idx, { type: type, text: msg, options: itemOptions })
         if (itemOptions.permanent === false) {
-        // remove item from array
+          // remove item from array
           setTimeout(() => { this.removeItem(idx) }, this.options.duration + itemOptions.visibility)
         }
       },
