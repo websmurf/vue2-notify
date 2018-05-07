@@ -30,7 +30,7 @@
     "vue": "^2.5.11"
   },
   "devDependencies": {
-    "@vue/test-utils": "^1.0.0-beta.12",
+    "@vue/test-utils": "^1.0.0-beta.15",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
