@@ -1,16 +1,16 @@
 <template>
-  <div class="notify" :class="'notify-' + options.position" :style="{ width: width}">
+  <div :class="'notify-' + options.position" :style="{ width: width}" class="notify">
     <transition-group name="notify" tag="div" @enter="slideDown" @leave="slideUp">
       <div v-for="(item, key) in items" :key="key" class="notify-item">
         <div :class="item.options.itemClass">
-          <button type="button" aria-label="Close"
-                  v-if="item.options.closeButtonClass"
-                  @click="removeItem(key)"
-                  :class="item.options.closeButtonClass">
+          <button v-if="item.options.closeButtonClass" :class="item.options.closeButtonClass"
+                  type="button"
+                  aria-label="Close"
+                  @click="removeItem(key)">
             <span aria-hidden="true">&times;</span>
           </button>
-          <span :class="item.options.iconClass" v-if="item.options.iconClass"></span>
-          <div v-if="item.options.mode === 'html'" v-html="item.text"></div>
+          <span v-if="item.options.iconClass" :class="item.options.iconClass"/>
+          <div v-if="item.options.mode === 'html'" v-html="item.text"/>
           <template v-else>{{ item.text }}</template>
         </div>
       </div>
@@ -63,88 +63,88 @@
     z-index: 100
 </style>
 <script>
-  import Vue from 'vue'
-  import Velocity from 'velocity-animate'
+import Vue from 'vue'
+import Velocity from 'velocity-animate'
 
-  export default {
-    data () {
-      return {
-        types: {
-          info: { itemClass: 'alert-info', iconClass: 'fa fa-lg fa-info-circle' },
-          error: { itemClass: 'alert-danger', iconClass: 'fa fa-lg fa-exclamation-triangle' },
-          warning: { itemClass: 'alert-warning', iconClass: 'fa fa-lg fa-exclamation-circle' },
-          success: { itemClass: 'alert-success', iconClass: 'fa fa-lg fa-check-circle' }
-        },
-        options: {
-          itemClass: 'alert col-12',
-          duration: 500,
-          visibility: 2000,
-          position: 'top-left',
-          enter: 'slideDown',
-          leave: 'slideUp',
-          closeButtonClass: false,
-          width: '300px',
-          mode: 'text',
-          permanent: false
-        },
-        items: {}
-      }
-    },
-    methods: {
-      setTypes (types) {
-        this.types = types
+export default {
+  data () {
+    return {
+      types: {
+        info: { itemClass: 'alert-info', iconClass: 'fa fa-lg fa-info-circle' },
+        error: { itemClass: 'alert-danger', iconClass: 'fa fa-lg fa-exclamation-triangle' },
+        warning: { itemClass: 'alert-warning', iconClass: 'fa fa-lg fa-exclamation-circle' },
+        success: { itemClass: 'alert-success', iconClass: 'fa fa-lg fa-check-circle' }
       },
-      addItem (type, msg, options) {
-        let defaultOptions = {
-          iconClass: this.types[type].iconClass,
-          itemClass: [this.options.itemClass, this.types[type].itemClass],
-          visibility: this.options.visibility,
-          mode: this.options.mode,
-          closeButtonClass: this.options.closeButtonClass,
-          permanent: this.options.permanent
-        }
-        let itemOptions = Object.assign({}, defaultOptions, options)
-
-        // generate unique index
-        let idx = new Date().getTime()
-
-        // check if this message is already shown
-        for (let key in this.items) {
-          if (this.items.hasOwnProperty(key)) {
-            if (this.items[key].text === msg) {
-              return
-            }
-          }
-        }
-
-        // add it to the queue (if it's not already there)
-        Vue.set(this.items, idx, { type: type, text: msg, options: itemOptions })
-        if (itemOptions.permanent === false) {
-          // remove item from array
-          setTimeout(() => { this.removeItem(idx) }, this.options.duration + itemOptions.visibility)
-        }
+      options: {
+        itemClass: 'alert col-12',
+        duration: 500,
+        visibility: 2000,
+        position: 'top-left',
+        enter: 'slideDown',
+        leave: 'slideUp',
+        closeButtonClass: false,
+        width: '300px',
+        mode: 'text',
+        permanent: false
       },
-      slideDown (el) {
-        Velocity(el, this.options.enter, {duration: this.options.duration})
-      },
-      slideUp (el, done) {
-        Velocity(el, this.options.leave, {duration: this.options.duration, complete: done})
-      },
-      removeItem (index) {
-        Vue.delete(this.items, index)
-      },
-      removeAll () {
-        this.items = {}
-      }
-    },
-    computed: {
-      width () {
-        if (this.options.position === 'top-full' || this.options.position === 'bottom-full') {
-          return 'auto'
-        } else {
-          return this.options.width
-        }
+      items: {}
+    }
+  },
+  computed: {
+    width () {
+      if (this.options.position === 'top-full' || this.options.position === 'bottom-full') {
+        return 'auto'
+      } else {
+        return this.options.width
       }
     }
+  },
+  methods: {
+    setTypes (types) {
+      this.types = types
+    },
+    addItem (type, msg, options) {
+      let defaultOptions = {
+        iconClass: this.types[type].iconClass,
+        itemClass: [this.options.itemClass, this.types[type].itemClass],
+        visibility: this.options.visibility,
+        mode: this.options.mode,
+        closeButtonClass: this.options.closeButtonClass,
+        permanent: this.options.permanent
+      }
+      let itemOptions = Object.assign({}, defaultOptions, options)
+
+      // generate unique index
+      let idx = new Date().getTime()
+
+      // check if this message is already shown
+      for (let key in this.items) {
+        if (this.items.hasOwnProperty(key)) {
+          if (this.items[key].text === msg) {
+            return
+          }
+        }
+      }
+
+      // add it to the queue (if it's not already there)
+      Vue.set(this.items, idx, { type: type, text: msg, options: itemOptions })
+      if (itemOptions.permanent === false) {
+        // remove item from array
+        setTimeout(() => { this.removeItem(idx) }, this.options.duration + itemOptions.visibility)
+      }
+    },
+    slideDown (el) {
+      Velocity(el, this.options.enter, {duration: this.options.duration})
+    },
+    slideUp (el, done) {
+      Velocity(el, this.options.leave, {duration: this.options.duration, complete: done})
+    },
+    removeItem (index) {
+      Vue.delete(this.items, index)
+    },
+    removeAll () {
+      this.items = {}
+    }
   }
+}
 </script>
