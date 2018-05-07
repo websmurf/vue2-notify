@@ -87,7 +87,8 @@ export default {
         mode: 'text',
         permanent: false
       },
-      items: {}
+      items: {},
+      idx: 0
     }
   },
   computed: {
@@ -114,11 +115,12 @@ export default {
       }
       let itemOptions = Object.assign({}, defaultOptions, options)
 
-      // generate unique index
-      let idx = new Date().getTime()
+      // get idx
+      let idx = this.idx
 
       // check if this message is already shown
       for (let key in this.items) {
+        /* istanbul ignore else */
         if (this.items.hasOwnProperty(key)) {
           if (this.items[key].text === msg) {
             return
@@ -127,7 +129,12 @@ export default {
       }
 
       // add it to the queue (if it's not already there)
-      Vue.set(this.items, idx, { type: type, text: msg, options: itemOptions })
+      Vue.set(this.items, this.idx, { type: type, text: msg, options: itemOptions })
+
+      // increment key
+      this.idx++
+
+      // remove item if not permanent
       if (itemOptions.permanent === false) {
         // remove item from array
         setTimeout(() => { this.removeItem(idx) }, this.options.duration + itemOptions.visibility)

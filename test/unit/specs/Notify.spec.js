@@ -5,24 +5,6 @@ import Notify from 'src/Notify'
 
 jest.useFakeTimers()
 
-const fixedDate = new Date('2018-02-28T09:39:59Z');
-let _originalDate;
-
-beforeAll(() => {
-  _originalDate = Date;
-
-  Date = class extends Date {
-    constructor() {
-      super();
-      return fixedDate;
-    }
-  };
-});
-
-afterAll(() => {
-  Date = _originalDate;
-});
-
 describe('Notify.vue', () => {
   const defaultTypes = {
     info: { itemClass: 'alert-info', iconClass: 'fa fa-lg fa-info-circle' },
@@ -110,14 +92,27 @@ describe('Notify.vue', () => {
 
     // Call method logic
     wrapper.vm.addItem.call(Notify, 'error', 'This is an error message')
+    wrapper.vm.addItem.call(Notify, 'info', 'This is an info message')
 
     expect(wrapper.vm.items).toEqual({
-      1519810799000: {
+      0: {
         type: 'error',
         text: 'This is an error message',
         options: {
           iconClass: 'fa fa-lg fa-exclamation-triangle',
           itemClass: ['alert col-12', 'alert-danger'],
+          visibility: 2000,
+          mode: 'text',
+          closeButtonClass: false,
+          permanent: false
+        }
+      },
+      1: {
+        type: 'info',
+        text: 'This is an info message',
+        options: {
+          iconClass: 'fa fa-lg fa-info-circle',
+          itemClass: ['alert col-12', 'alert-info'],
           visibility: 2000,
           mode: 'text',
           closeButtonClass: false,
@@ -144,7 +139,7 @@ describe('Notify.vue', () => {
     wrapper.vm.addItem.call(Notify, 'error', 'This is an error message', { iconClass: 'icon', itemClass: 'item', visibility: 10000, mode: 'html', closeButtonClass: 'bulma', permanent: true })
 
     expect(wrapper.vm.items).toEqual({
-      1519810799000: {
+      0: {
         type: 'error',
         text: 'This is an error message',
         options: {
@@ -163,7 +158,7 @@ describe('Notify.vue', () => {
 
     // Remove should not be not be called on permanent items
     expect(wrapper.vm.items).toEqual({
-      1519810799000: {
+      0: {
         type: 'error',
         text: 'This is an error message',
         options: {
@@ -192,7 +187,7 @@ describe('Notify.vue', () => {
     wrapper.vm.addItem.call(Notify, 'error', 'This is an error message')
 
     expect(wrapper.vm.items).toEqual({
-      1519810799000: {
+      0: {
         type: 'error',
         text: 'This is an error message',
         options: {
