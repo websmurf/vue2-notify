@@ -96,6 +96,7 @@ describe('notify.vue', function () {
 
     // Call method logic
     Notify.methods.addItem.call(Notify, 'error', 'This is an error message', { iconClass: 'icon', itemClass: 'item', visibility: 10000, mode: 'html', closeButtonClass: 'bulma', permanent: true })
+
     // Items should be set at this point, keyed by the timestamp (zero at this point)
     expect(Notify.items).to.deep.equal({0: {
       type: 'error',
@@ -112,6 +113,43 @@ describe('notify.vue', function () {
     // Move clock another second forward
     expect(Notify.removeItem.calledOnce).to.equal(false)
     expect(Notify.removeItem.calledWith(0)).to.equal(false)
+
+    // Restore logic
+    clock.restore()
+  })
+
+  it('should have an addItem method that doesn\'t add an item that\'s already there to the items list', function () {
+    // Use fake timers
+    let clock = sinon.useFakeTimers()
+
+    // Create mock list
+    Notify.items = {}
+    Notify.types = Notify.data().types
+    Notify.options = Notify.data().options
+    Notify.removeItem = sinon.stub()
+
+    // Call method logic
+    Notify.methods.addItem.call(Notify, 'error', 'This is an error message', { iconClass: 'icon', itemClass: 'item', visibility: 10000, mode: 'html', closeButtonClass: 'bulma', permanent: false })
+
+    // Call method logic again
+    Notify.methods.addItem.call(Notify, 'error', 'This is an error message', { iconClass: 'icon', itemClass: 'item', visibility: 10000, mode: 'html', closeButtonClass: 'bulma', permanent: false })
+
+    // Items should be set at this point, keyed by the timestamp (zero at this point)
+    expect(Notify.items).to.deep.equal({0: {
+      type: 'error',
+      text: 'This is an error message',
+      options: { iconClass: 'icon', itemClass: 'item', visibility: 10000, mode: 'html', closeButtonClass: 'bulma', permanent: false }
+    }})
+
+    // At this point removeItem should not be called
+    expect(Notify.removeItem.called).to.equal(false)
+
+    // Move clock forward visibility + duration milliseconds
+    clock.tick(10501)
+
+    // Move clock another second forward
+    expect(Notify.removeItem.calledOnce).to.equal(true)
+    expect(Notify.removeItem.calledWith(0)).to.equal(true)
 
     // Restore logic
     clock.restore()
