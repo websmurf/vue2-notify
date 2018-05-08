@@ -1,6 +1,7 @@
 # Notify
 
 [![Build Status](https://travis-ci.org/websmurf/vue2-notify.svg?branch=master)](https://travis-ci.org/websmurf/vue2-notify)
+[![Coverage Status](https://coveralls.io/repos/github/websmurf/vue2-notify/badge.svg?branch=master)](https://coveralls.io/github/websmurf/vue2-notify?branch=master)
 
 A simple bootstrap|bulma styled Vue component for notifications. Compatible with Vue 2.x
 
