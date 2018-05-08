@@ -14,7 +14,7 @@ Optional packages:
 ## Install
 
 ```
-$ npm install vue2-notify --save
+$ yarn add vue2-notify
 ```
 
 Then in your main.js:
@@ -123,7 +123,6 @@ const types = {
   error: { itemClass: 'is-danger' },
   warning: { itemClass: 'is-warning' },
   success: { itemClass: 'is-success', iconClass: 'fa fa-lg fa-check-circle' }
-
 }
 
 Vue.$notify.setTypes(types);
