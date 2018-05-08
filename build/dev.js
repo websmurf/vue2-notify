@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Notify from '../src/install'
+import Notify from '../src/index.js'
 
 // Use Notify
 Vue.use(Notify)
@@ -13,6 +13,9 @@ new Vue({
   '<button class="btn btn-danger mr-1" @click="error">Error</button>' +
   '<button class="btn btn-secondary mr-1" @click="advanced">Advanced</button>' +
   '</div>',
+  components: {
+    Notify
+  },
   methods: {
     error () {
       this.$notify('This is an error message', 'error')
@@ -27,7 +30,7 @@ new Vue({
       this.$notify('This is a success message', 'success')
     },
     advanced () {
-      this.$notify('This is an advanced message', 'info', { visibility: 10000, iconClass: 'fa fa-lg fa-handshake-o' })
+      this.$notify('This is an advanced message', 'info', { visibility: 10000, iconClass: 'fa fa-lg fa-handshake-o', closeButtonClass: 'btn btn-default pull-right' })
     }
   }
 }).$mount('#app')

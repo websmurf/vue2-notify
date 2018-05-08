@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notify.vue renders a notification correctly 1`] = `
+<div class="notify notify-top-left" style="width: 300px;"><span name="notify" tag="div"><div class="notify-item"><div class="alert col-12 alert-info"><!----> <span class="fa fa-lg fa-info-circle"></span> This is an info message</div>
+</div>
+</span>
+</div>
+`;
+
+exports[`Notify.vue renders an empty notify element correctly 1`] = `<div class="notify notify-top-left" style="width: 300px;"><span name="notify" tag="div"></span></div>`;
